@@ -1,0 +1,3 @@
+"0","# Importar ""ActividadR_long.csv"""
+"0",""
+"0","Probando = ActividadR %>% gather(Nutriente.tasa, Expresión_genética, - name, -BP, -MF, -systematic_name)"

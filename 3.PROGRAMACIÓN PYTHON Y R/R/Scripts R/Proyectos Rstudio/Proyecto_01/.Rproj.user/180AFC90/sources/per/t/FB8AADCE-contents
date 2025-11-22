@@ -1,0 +1,130 @@
+---
+title: "Trabajando con datos Tabulares"
+output:
+  html_document:
+    df_print: paged
+---
+
+Una cantidad sustancial de los datos con los que trabajamos en genómica serán datos tabulares, es decir, datos organizados en filas y columnas, también conocidos como hojas de cálculo. En este ejercicio trabajaremos con un archivo con formato VCF.
+
+El Variant Call Format (VCF, formato de llamado de variantes) es un formato de texto que se usa en Bioinformática para almacenar variantes de una o varias secuencias de genes respecto a un genoma de referencia.
+
+Las cabeceras proveen metadatos describiendo el contenido del archivo. Las líneas de cabecera son indicadas con una almohadilla (\#) al inicio de la línea. Palabras clave en la cabecera son denotadas con ##. Algunas palabras clave recomendadas son fileformat, fileDate y reference.
+
+![](VCF1.png)
+
+El cuerpo de un archivo VCF sigue a la cabecera y está separado por tabuladores en 8 columnas obligatorias y puede contener un número ilimitado de columnas opcionales.
+
+![](VCF2.png)
+
+```{r}
+URL = "https://www.dropbox.com/scl/fi/iwns8slth9fiybu85x87c/combined_vcf.csv?rlkey=t8mistbr2dkvmbdvbep7u70to&dl=1"
+download.file(URL,"combined_vcf.csv")
+variantes = read.csv("combined_vcf.csv", sep = "\t")
+
+```
+
+Revisar estructura del dataframe creado
+
+```{r}
+str(variantes)
+head(variantes)
+```
+
+Mostrar parte del campo REF del dataframe
+
+```{r}
+#head(variantes$REF)
+library(dplyr)
+variantes %>% select(REF) %>% head()
+```
+
+Transformar el campo REF del dataframe variantes en un factor.
+
+```{r}
+variantes$REF <- as.factor (variantes$REF)
+#para comprobar que lo ha cambiado correctamente a factor
+is.factor(variantes$REF)
+```
+
+Nos damos cuenta que preferimos manejarlo como un factor ordenado. Transformar el campo REF a factor ordenado.
+
+```{r}
+variantes$REF <- factor (variantes$REF, ordered = TRUE)
+```
+
+## Práctica uso de funciones de tidyverse
+
+Crear un nuevo dataframe que contenga solo las observaciones de la muestra "SRR2584863"
+
+```{r}
+library(dplyr)
+df <- variantes %>% filter(sample_id == "SRR2584863")
+head(df)
+```
+
+Alternativa sin dplyr
+
+```{r}
+df2 <- variantes[(variantes$sample_id == "SRR2584863"), ]
+
+```
+
+Extraer los datos relacionados con las muestras: "SRR2584863" y "SRR2584866"
+
+```{r}
+
+# se le pone | que es el OR para decir qe filtres por las que tienen ese numero de muestra o el otro, si se le pone el & el AND, le estas diciendo las que tengan ambos identificadores y no hay muestras con los dos identificadores
+df4 <- variantes %>% filter(sample_id == "SRR2584863" | sample_id == "SRR2584866")
+
+```
+
+Extraer las muestras "SRR2584863" y "SRR2584866", y que además los valores de POS estén entre 200.000 y 300.000
+
+```{r}
+
+#df5 <- variantes %>% filter(sample_id == "SRR2584863" | sample_id == "SRR2584866") %>% filter(POS >= 200000 & POS <= 300000)
+# También se puede hacer utilizando otra función que es between
+ 
+df6 <- variantes %>% filter(sample_id %in% c("SRR2584863", "SRR2584866") & between(POS, 200000, 300000))
+```
+
+Visualizar solo las columnas sample_id, CHROM y POS de la muestra anterior
+
+```{r}
+df7 <- df6 %>% select(c("sample_id", "CHROM", "POS"))
+View(df7)
+```
+
+Convertir el campo REF a cadena de caracteres para poder extraer la longitud de cada cadena
+
+```{r}
+variantes$REF = as.character(variantes$REF)
+str(variantes)
+```
+
+Agregar una columna con la longitud de REF
+
+```{r}
+# nchar es el número de carácteres 
+df <- variantes %>% mutate(REF_length = nchar(REF))
+```
+
+Agrupar por muestras
+
+```{r}
+# y calcular cuantas observaciones tengo por muestra
+
+# aqui la función nrow no sirve, si se quiere contabilizar hay que usar la función n
+variantes %>% group_by(sample_id) %>% summarise(row_num = n())
+
+```
+
+Ordenar por el campo POS en ascendente y descendente
+
+```{r}
+# orden ascendente
+df9 <- variantes %>% arrange(POS)
+# orden descentende
+df10 <- variantes %>% arrange(desc(POS))
+```

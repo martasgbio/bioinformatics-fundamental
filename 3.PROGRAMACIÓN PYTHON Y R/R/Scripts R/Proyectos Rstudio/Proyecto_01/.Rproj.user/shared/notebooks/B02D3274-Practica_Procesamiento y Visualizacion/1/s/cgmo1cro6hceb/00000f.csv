@@ -1,0 +1,3 @@
+"0","data.long = data %>% "
+"0","  rename(gene = X) %>%"
+"0","  gather(key=""samples"", value=""FPKM"", -gene) "

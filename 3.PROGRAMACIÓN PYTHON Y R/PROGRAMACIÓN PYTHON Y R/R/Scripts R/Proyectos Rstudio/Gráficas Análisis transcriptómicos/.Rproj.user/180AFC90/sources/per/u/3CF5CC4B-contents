@@ -1,0 +1,19 @@
+categorias <- c("Assigned", "No Feature", "Ambiguous", "Too Low Quality", "Not Aligned")
+porcentages <- c(73.00, 8.00, 3.00, 11.00, 2.00)
+
+
+df <- data.frame(Category = categorias, Percentage = porcentages)
+
+ggplot(df, aes(x = Category, y = Percentage, fill = Category)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Porcentaje de Lecturas por Categoría", 
+       x = "Categoría", 
+       y = "Porcentaje (%)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotar etiquetas del eje X
+
+
+
+
+
+

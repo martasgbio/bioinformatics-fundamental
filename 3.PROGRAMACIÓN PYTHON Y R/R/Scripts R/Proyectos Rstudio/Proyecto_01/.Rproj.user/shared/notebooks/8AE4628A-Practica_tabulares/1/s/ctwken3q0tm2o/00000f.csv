@@ -1,0 +1,3 @@
+"0","#head(variantes$REF)"
+"0","library(dplyr)"
+"0","variantes %>% select(REF) %>% head()"

@@ -1,0 +1,249 @@
+---
+title: "Ejercicios Visualización Datos "
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+Excel es un gran programa para visualizar y manipular pequeños conjuntos
+de datos. Sin embargo, no es excelente para trabajar con conjuntos
+grandes de datos y los gráficos resultantes generalmente no se pueden
+publicar. Aprender R y los paquetes de graficación es una excelente
+manera de generar figuras publicables de manera reproducible. El uso de
+R no sólo evitará que edites tus datos accidentalmente, sino que también
+te permitirá generar scripts que se pueden ver más tarde o reutilizar
+para generar el mismo gráfico usando datos diferentes. Esto evitará que
+tengas que confiar en tu memoria cuando te preguntes qué datos se
+utilizaron o cómo se generó un gráfico.
+
+Vamos a importar y revisar unos datos que se encuentran en formato
+excel. Es posible que necesites instalar el paquete **readxl** para el
+siguiente ejercicio.
+
+```{r}
+list.of.packages = c("readxl","ggplot2")
+list.of.packages
+
+new.packages = list.of.packages[!(list.of.packages %in% installed.packages())]
+if(length(new.packages)> 0) install.packages(new.packages)
+
+invisible(lapply(list.of.packages, FUN=library, character.only=TRUE))
+```
+
+Revisar la función **read_xlsx()** que nos permitirá importar los datos
+de la hoja excel a un objeto de tipo tibble.
+
+```{r}
+data = readxl::read_xlsx(
+  "RNASeq_totalcounts_vs_totaltrans.xlsx",sheet=1)
+```
+
+```{r}
+datasrst
+```
+
+Un tibble, o tbl_df, es una reinvención moderna del data.frame,
+manteniendo lo que el tiempo ha demostrado ser efectivo y descartando lo
+que no lo es. Los tibbles son data.frames que hacen menos (por ejemplo,
+no cambian los nombres o tipos de variables) y se quejan más (por
+ejemplo, cuando una variable no existe). Esto nos obliga a afrontar los
+problemas antes, lo que normalmente conduce a un código más limpio y
+documentado.
+
+Estos datos incluyen el recuento total de lecturas de transcripciones
+sumado por muestra y el número total de transcripciones recuperadas por
+muestra que tuvieron al menos 100 lecturas. Estos datos se derivan de un
+experimento de RNAseq en masa descrito por [Himes et al.
+(2014)](https://pubmed.ncbi.nlm.nih.gov/24926665/). En el experimento,
+los autores "caracterizaron cambios transcriptómicos en cuatro líneas
+celulares primarias de ASM humanas que fueron tratadas con
+dexametasona", una terapia común para el asma. Cada línea celular
+incluía un control negativo tratado y no tratado, lo que dio como
+resultado un tamaño de muestra total de 8.
+
+Observemos en los datos como están identificadas las columnas de la
+estructura de datos.
+
+```{r}
+colnames(data)
+```
+
+Los espacios causan problemas en la manipulación de datos en R, pero
+podemos indicar en los argumentos de carga para que repare los nombres
+de nuestras columnas.
+
+```{r}
+data=readxl::read_xlsx(
+  "RNASeq_totalcounts_vs_totaltrans.xlsx",sheet=1, .name_repair="universal")
+
+```
+
+```{r}
+colnames(data)
+```
+
+El valor predeterminado de Readxl es **.name_repair = "unique"**, lo que
+garantiza que cada columna tenga un nombre único. Si eso ya es cierto
+para los nombres de las columnas, readxl no los tocará.
+
+El valor **.name_repair = "universal"** se asegura de que no contengan
+caracteres prohibidos ni palabras reservadas.
+
+¿Cuál es la relación entre las sumas totales de transcripciones por
+muestra y el número de transcripciones recuperadas por muestra?
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts)) + 
+        geom_point() 
+```
+
+Podemos ver que existe una relación entre el número de transcripciones
+por muestra y el total de transcripciones recuperadas por muestra. Los
+parámetros predeterminados de ggplot2 son excelentes para el análisis de
+datos exploratorios.
+
+Hay múltiples funciones geom que cambian el tipo de básico de gráfico o
+aspectos de la representación. Podemos crear diagramas de dispersión
+(geom_point()), diagramas de líneas (geom_line(),geom_path()), diagramas
+de barras (geom_bar(), geom_col()), líneas modeladas a datos ajustados
+(geom_smooth()), mapas de calor (geom_tile ()), mapas geográficos
+(geom_polygon()), etc.
+
+También, cuando escribimos geom en un bloque de código o en la consola
+podemos ver una serie de opciones emergentes, o podemos buscar la
+documentación de ggplot2 en la pestaña de ayuda.
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts)) + 
+        geom_line() 
+```
+
+Regresemos al gráfico de puntos, podemos visualizar cómo se comporta
+dado el tratamiento.
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() 
+```
+
+ggplot2 asignará automáticamente colores a las categorías de nuestros
+datos. Podemos cambiar los colores predeterminados aportando una capa
+adicional a nuestra figura. Para cambiar el color, usamos las funciones
+scale_color: scale_color_manual(), scale_color_brewer(),
+scale_color_grey(), etc. También podemos cambiar el nombre de las
+etiquetas de color en la leyenda usando el argumento de etiquetas de
+estas funciones.
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() +
+        scale_color_manual(values=c("red","black"), labels=c('yes','no'))
+
+```
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() +
+        scale_color_grey(labels=c('yes','no'))
+```
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() +
+        scale_color_brewer(palette ="Paired", labels=c('yes','no'))
+```
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() +
+        scale_color_brewer(palette ="Pastel2", labels=c('yes','no'))
+```
+
+Para las opciones de palette revisar la sección de palettes de la
+función scale_color_brewer().
+
+```{r}
+ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment))  +        geom_point(shape=10, size=2) 
+  
+```
+
+Otras formas:
+
+```{r}
+ggplot(data=data) + 
+  geom_point(aes(x=Number.of.Transcripts, y = Total.Counts,fill=Sample.Name),
+             shape=21,size=2) + 
+    facet_wrap(~Treatment)
+```
+
+```{r}
+ggplot(data=data) + 
+  geom_point(aes(x=Number.of.Transcripts, y = Total.Counts,fill=Sample.Name),
+             shape=21,size=2) +
+  facet_wrap(~Treatment, ncol=1)
+```
+
+Uso de múltiples geoms
+
+```{r}
+ggplot(data=data, mapping=aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) + 
+  geom_point() +
+  geom_smooth(method='lm', aes(x=Number.of.Transcripts, y = Total.Counts, color= Treatment)) +
+  labs(title = "Uso de múltiples geoms") +
+  xlab("Transcripciones recuperadas por muestra")+
+  ylab("Secuencias totales por muestra") +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+```
+
+```{r}
+ggplot(data=data, aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) + 
+  geom_point() +
+  geom_smooth(method='lm') +
+  xlab("Transcripciones recuperadas por muestra")+
+  ylab("Secuencias totales por muestra") +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+```
+
+Para guardar nuestro gráfico en un archivo, la forma más sencilla de
+hacer esto con ggplot2 es usando la función ggsave(). Esta función
+guardará el último gráfico que mostró de forma predeterminada.
+
+```{r}
+ggsave("prueba.png")
+```
+
+```{r}
+p = ggplot(data=data, aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) + 
+  geom_point() +
+  geom_smooth(method='lm') +
+  xlab("Transcripciones recuperadas por muestra")+
+  ylab("Secuencias totales por muestra") +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+
+
+```
+
+Otra forma es usando las funciones pdf, png, ps, jpeg
+
+```{r}
+pdf("mi_plot.pdf",         # Nombre del archivo
+    width = 8, height = 7, # Ancho y alto en pulgadas
+    bg = "white"       # Color de fondo
+ )
+p
+dev.off()
+```
+
+```{r}
+png("miplot.png", width=1200, height=1000, units="px")
+p
+dev.off()
+```
+
+```{r}
+jpeg("miplot.jpeg", quality=75)
+p
+dev.off()
+```
+
+```{r}
+jpeg("miplot.jpeg", quality=75, width= 1200, height=1000)
+p
+dev.off()
+```

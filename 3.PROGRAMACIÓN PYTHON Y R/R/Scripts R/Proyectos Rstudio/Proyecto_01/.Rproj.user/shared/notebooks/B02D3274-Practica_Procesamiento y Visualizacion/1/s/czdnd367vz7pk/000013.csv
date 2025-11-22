@@ -1,0 +1,69 @@
+"0","list.of.packages = c(""dplyr"",""ggplot2"",""tidyr"", ""R.utils"")"
+"0","list.of.packages_Bio = c(""GEOquery"")"
+"0","list.of.packages"
+"1","[1]"
+"1"," ""dplyr""  "
+"1"," ""ggplot2"""
+"1"," ""tidyr""  "
+"1"," ""R.utils"""
+"1","
+"
+"0","list.of.packages_Bio"
+"1","[1]"
+"1"," ""GEOquery"""
+"1","
+"
+"0","new.packages = list.of.packages[!(list.of.packages %in% installed.packages())]"
+"0","if(length(new.packages)> 0) install.packages(new.packages)"
+"0",""
+"0","new.packages = list.of.packages_Bio[!(list.of.packages_Bio %in% installed.packages())]"
+"0","if(length(new.packages)> 0) BiocManager::install(new.packages,version = BiocManager::version())"
+"0",""
+"0","invisible(lapply(list.of.packages, FUN=library, character.only=TRUE))"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following object is masked from ‘package:seqinr’:
+
+    count
+
+"
+"2","The following object is masked from ‘package:Biobase’:
+
+    combine
+
+"
+"2","The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","invisible(lapply(list.of.packages_Bio, FUN=library, character.only=TRUE))"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","Setting options('download.file.method.GEOquery'='auto')
+"
+"2","Setting options('GEOquery.inmemory.gpl'=FALSE)
+"
+"2","
+Attaching package: ‘GEOquery’
+
+"
+"2","The following object is masked from ‘package:R.utils’:
+
+    gunzip
+
+"

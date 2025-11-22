@@ -1,0 +1,6 @@
+"0","print(paste(""El número de secuencias es "", length(datos_orchid)))"
+"1","[1]"
+"1"," ""El número de secuencias es  94"""
+"1","
+"
+"0","# se han descargado 94 secuencias"

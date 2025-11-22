@@ -1,0 +1,4 @@
+"0",""
+"0","# o también se puede hacer directamente mediante otro pipe "
+"0","ArchivoR_long %>% filter(name == ""LEU4"") %>% ggplot(, mapping= aes(x=Tasa_crecimiento, y = Expresión_genética, color=Nutriente)) +         "
+"0","  geom_line(size=1) + labs (x=""Tasa de crecimiento"", y=""Expresión del gen LEU4"")"

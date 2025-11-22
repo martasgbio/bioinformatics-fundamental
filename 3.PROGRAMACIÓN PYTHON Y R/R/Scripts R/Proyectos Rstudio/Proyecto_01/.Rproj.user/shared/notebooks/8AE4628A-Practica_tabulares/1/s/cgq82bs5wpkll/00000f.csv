@@ -1,0 +1,7 @@
+"0","variantes$REF <- as.factor (variantes$REF)"
+"0","#para comprobar que lo ha cambiado correctamente a factor"
+"0","is.factor(variantes$REF)"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

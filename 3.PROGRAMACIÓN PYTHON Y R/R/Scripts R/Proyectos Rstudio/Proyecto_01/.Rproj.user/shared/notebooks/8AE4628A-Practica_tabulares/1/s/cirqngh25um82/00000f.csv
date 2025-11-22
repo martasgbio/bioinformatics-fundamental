@@ -1,0 +1,2 @@
+"0","# nchar es el número de carácteres "
+"0","df <- variantes %>% mutate(REF_length = nchar(REF))"

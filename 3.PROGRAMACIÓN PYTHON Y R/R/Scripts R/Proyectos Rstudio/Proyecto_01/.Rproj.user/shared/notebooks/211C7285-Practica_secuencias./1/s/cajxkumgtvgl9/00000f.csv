@@ -1,0 +1,13 @@
+"0","dengue = getncbiseq(""NC_001474"")"
+"2","Loading required package: seqinr
+"
+"0","class(dengue)"
+"1","[1]"
+"1"," ""character"""
+"1","
+"
+"0","length(dengue)"
+"1","[1]"
+"1"," 10723"
+"1","
+"

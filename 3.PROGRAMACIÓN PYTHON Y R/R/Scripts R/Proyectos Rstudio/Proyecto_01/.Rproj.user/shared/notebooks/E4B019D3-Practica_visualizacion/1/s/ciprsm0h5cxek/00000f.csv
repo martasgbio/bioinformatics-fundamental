@@ -1,0 +1,2 @@
+"0","ggplot(data=data, mapping= aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) +         geom_point() +"
+"0","        scale_color_brewer(palette =""Pastel2"", labels=c('yes','no'))"

@@ -1,0 +1,3 @@
+"0","library(dplyr)"
+"0","df <- variantes %>% filter(sample_id == ""SRR2584863"")"
+"0","head(df)"

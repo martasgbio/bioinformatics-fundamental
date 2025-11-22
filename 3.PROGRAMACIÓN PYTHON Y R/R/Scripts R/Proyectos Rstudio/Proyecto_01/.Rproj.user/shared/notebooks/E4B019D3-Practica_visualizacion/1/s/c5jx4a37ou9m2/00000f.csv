@@ -1,0 +1,9 @@
+"0","ggplot(data=data, mapping=aes(x=Number.of.Transcripts, y = Total.Counts, color=Treatment)) + "
+"0","  geom_point() +"
+"0","  geom_smooth(method='lm', aes(x=Number.of.Transcripts, y = Total.Counts, color= Treatment)) +"
+"0","  labs(title = ""Uso de múltiples geoms"") +"
+"0","  xlab(""Transcripciones recuperadas por muestra"")+"
+"0","  ylab(""Secuencias totales por muestra"") +"
+"0","  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))"
+"1","[1m[22m`geom_smooth()` using formula = 'y ~ x'
+"

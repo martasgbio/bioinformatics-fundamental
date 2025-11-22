@@ -1,0 +1,247 @@
+---
+title: "Procesamiento y Visualización"
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+Ejercicio: 
+procesar datos de expresión génica descargados desde NCBI
+GEO, llevar dichos datos a un formato que nos permita fácilmente su
+visualización usando ggplot2.
+
+Para este ejercicio vamos a necesitar una serie de paquetes de R:
+
+-   Procesamiento y transformación de los datos:
+
+    -   R.utils para descomprimir archivos,
+
+    -   dplyr para manipulación, selección, etc.
+
+    -   tidyr para cambiar el formato de los datos (wide a long)
+
+-   Acceso a los metadatos del conjunto de datos: GEOquery
+
+# Instalación y carga de las librerías necesarias
+
+```{r}
+list.of.packages = c("dplyr","ggplot2","tidyr", "R.utils")
+list.of.packages_Bio = c("GEOquery")
+list.of.packages
+list.of.packages_Bio
+
+new.packages = list.of.packages[!(list.of.packages %in% installed.packages())]
+if(length(new.packages)> 0) install.packages(new.packages)
+
+new.packages = list.of.packages_Bio[!(list.of.packages_Bio %in% installed.packages())]
+if(length(new.packages)> 0) BiocManager::install(new.packages,version = BiocManager::version())
+
+invisible(lapply(list.of.packages, FUN=library, character.only=TRUE))
+invisible(lapply(list.of.packages_Bio, FUN=library, character.only=TRUE))
+```
+
+# Descarga del conjunto de datos
+
+```{r}
+URL="https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE183947&format=file&file=GSE183947%5Ffpkm%2Ecsv%2Egz"
+
+# Si el archivo existe en el directorio de trabajo, lo eliminamos con la función unlink()
+unlink("GSE183947_fpkm.csv.gz") 
+
+# Descarga del archivo usando URL y almacenamiento en nuestro directorio de trabajo
+# usando como nombre lo que indicamos en el argumento destfile
+download.file(URL,destfile="GSE183947_fpkm.csv.gz") 
+
+# El archivo descargado es comprimido con extensión .gz
+# En caso de existir el archivo descomprimido, lo eliminamos
+unlink("GSE183947_fpkm.csv")
+
+# Descompresión del archivo
+gunzip("GSE183947_fpkm.csv.gz")  
+```
+
+Importar datos
+
+```{r}
+data = read.csv(file="GSE183947_fpkm.csv")
+dim(data)
+```
+
+```{r}
+gse = getGEO(GEO="GSE183947", GSEMatrix=TRUE)
+```
+
+```{r}
+Sys.setenv("VROOM_CONNECTION_SIZE"=131072*1000)
+gse = getGEO(GEO="GSE183947", GSEMatrix=TRUE)
+gse
+```
+
+Extracción de información de los metadatos
+
+```{r}
+metadata = pData(phenoData(gse[[1]]))
+head(metadata)
+View(metadata)
+```
+
+Procesamiento y manipulación de los Datos
+
+```{r}
+metadata %>%
+  select(c(1,10,11,17)) %>%
+  head()
+
+```
+
+```{r}
+metadata %>%
+  select(c(1,10,11,17)) %>%
+  rename(tissue = characteristics_ch1) %>%
+  rename(metastasis = characteristics_ch1.1) %>%
+  head()
+```
+
+```{r}
+metadata %>%
+  select(c(1,10,11,17)) %>%
+  rename(tissue = characteristics_ch1) %>%
+  rename(metastasis = characteristics_ch1.1) %>%
+  mutate(tissue = gsub("tissue: ","",tissue)) %>%
+  head
+```
+
+```{r}
+metadata %>%
+  select(c(1,10,11,17)) %>%
+  rename(tissue = characteristics_ch1) %>%
+  rename(metastasis = characteristics_ch1.1) %>%
+  mutate(tissue = gsub("tissue: ","",tissue)) %>%
+  mutate(metastasis = gsub("metastasis: ","",metastasis)) %>%
+  head()
+```
+
+Una vez comprobado que todo esté correcto salvamos el resultado en un
+objeto metadata.modified
+
+```{r}
+# creamos un nuevo data frame modificado con lo anterior, no es que modifiquemos el metadata inicial
+metadata.modified = metadata %>%
+  select(c(1,10,11,17)) %>%
+  rename(tissue = characteristics_ch1) %>%
+  rename(metastasis = characteristics_ch1.1) %>%
+  mutate(tissue = gsub("tissue: ","",tissue)) %>%
+  mutate(metastasis = gsub("metastasis: ","",metastasis))
+  
+```
+
+Vamos a renombrar la variable/columna X a gene en data
+
+```{r}
+data %>% 
+  rename(gene = X) %>%
+  head()
+```
+
+Vamos a transformar data de formato wide a formato long
+
+```{r}
+data %>% 
+  rename(gene = X) %>%
+  gather(key="samples", value="FPKM", -gene) %>%
+  head()
+  
+```
+
+```{r}
+data.long = data %>% 
+  rename(gene = X) %>%
+  gather(key="samples", value="FPKM", -gene) 
+```
+
+Una vez que tenemos los datos en formato long y los metadatos vamos
+a hacer una unión de los metadatos a nuestros datos de las muestras.
+Vamos a usar una función de la familia de funciones join
+
+```{r}
+# union de dos data frame con join 
+  left_join(data.long, metadata.modified, by=c("samples"="description")) %>%
+  head(10)
+```
+
+```{r}
+
+data.long=left_join(data.long, metadata.modified, by=c("samples"="description"))
+```
+
+```{r}
+data.long %>%
+  filter(gene=="BRCA1" | gene == "BRCA2") %>%
+  group_by(gene,tissue) %>%
+  summarize(mean_FPKM=mean(FPKM), median_FPKM = median(FPKM)) %>% 
+  head()
+```
+```{r}
+data.long %>%
+  filter(gene=="BRCA1" | gene == "BRCA2") %>%
+  group_by(gene,tissue) %>%
+  summarize(mean_FPKM=mean(FPKM), median_FPKM = median(FPKM)) %>% 
+  arrange(mean_FPKM) %>%
+  head()
+```
+
+Salvar data.long
+
+```{r}
+write.csv(data.long, "GSE183947_long.csv", row.names=FALSE)
+```
+
+```{r eval=FALSE}
+data.long=read.csv("GSE183947_long.csv")
+
+```
+
+Visualización
+
+```{r eval=FALSE}
+ggplot(data, aes(x=variable1, y=variable2)) +
+  geom_col()
+```
+
+Gráfico de barras
+
+```{r}
+data.long %>%
+  filter(gene=="BRCA1") %>%
+  ggplot(., aes(x=samples, y=FPKM)) +
+  geom_col()
+```
+
+
+```{r}
+data.long %>%
+  filter(gene=="BRCA1") %>%
+  ggplot(., aes(x=samples, y=FPKM , fill=tissue)) +
+  geom_col()
+```
+
+
+```{r}
+data.long %>%
+  filter(gene=="BRCA1") %>%
+  ggplot(., aes(x=FPKM, fill=tissue)) +
+  geom_density()
+```
+
+
+```{r}
+data.long %>%
+  filter(gene=="BRCA1") %>%
+  ggplot(., aes(x=FPKM, fill=tissue)) +
+  geom_density(alpha=0.3)
+```
+
+

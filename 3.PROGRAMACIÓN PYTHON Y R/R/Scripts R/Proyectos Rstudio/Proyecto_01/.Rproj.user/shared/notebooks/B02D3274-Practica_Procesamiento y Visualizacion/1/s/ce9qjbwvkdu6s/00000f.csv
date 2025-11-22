@@ -1,0 +1,4 @@
+"0","data.long %>%"
+"0","  filter(gene==""BRCA1"") %>%"
+"0","  ggplot(., aes(x=FPKM, fill=tissue)) +"
+"0","  geom_density()"

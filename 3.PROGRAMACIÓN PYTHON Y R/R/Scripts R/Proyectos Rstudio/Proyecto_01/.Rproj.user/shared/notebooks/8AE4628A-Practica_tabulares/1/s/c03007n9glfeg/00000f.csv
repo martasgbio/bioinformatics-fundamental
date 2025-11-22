@@ -1,0 +1,4 @@
+"0",""
+"0","# se le pone | que es el OR para decir qe filtres por las que tienen ese numero de muestra o el otro, si se le pone el & el AND, le estas diciendo las que tengan ambos identificadores y no hay muestras con los dos identificadores"
+"0","df4 <- variantes %>% filter(sample_id == ""SRR2584863"" | sample_id == ""SRR2584866"")"
+"0",""

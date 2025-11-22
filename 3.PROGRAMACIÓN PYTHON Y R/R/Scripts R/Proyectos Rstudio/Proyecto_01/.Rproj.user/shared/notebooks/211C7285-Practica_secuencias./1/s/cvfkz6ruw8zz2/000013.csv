@@ -1,0 +1,4 @@
+"0",""
+"0","# Lectura de secuencias nucleicas o de aminoácidos de un archivo en formato FASTA"
+"0","ecoli = seqinr::read.fasta(file=""ecoli_cds.fa"")"
+"0",""

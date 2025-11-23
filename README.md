@@ -19,11 +19,16 @@ Searches for a specific DNA motif within sequences and returns the positions whe
 
 ## 📁 Repository Structure
 
+## 📁 Repository Structure
+
+```plaintext
 bioinformatics-fundamentals/
 ├── scripts/            # Python scripts for bioinformatics tasks
 ├── data/               # Example FASTA files
 ├── README.md           # Project documentation
 └── requirements.txt    # Python dependencies
+```
+
 
 ## 🎯 Project Purpose
 To practice core bioinformatics concepts and build a beginner-friendly portfolio demonstrating essential skills in computational biology.

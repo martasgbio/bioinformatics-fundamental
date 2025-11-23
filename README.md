@@ -19,12 +19,11 @@ Searches for a specific DNA motif within sequences and returns the positions whe
 
 ## 📁 Repository Structure
 
-```text
 bioinformatics-fundamentals/
-├── scripts/
-├── data/
-├── README.md
-└── requirements.txt
+├── scripts/ # Python scripts for bioinformatics tasks
+├── data/ # Example FASTA files
+├── README.md # Project documentation
+└── requirements.txt # Python dependencies
 
 
 ## 🎯 Project Purpose

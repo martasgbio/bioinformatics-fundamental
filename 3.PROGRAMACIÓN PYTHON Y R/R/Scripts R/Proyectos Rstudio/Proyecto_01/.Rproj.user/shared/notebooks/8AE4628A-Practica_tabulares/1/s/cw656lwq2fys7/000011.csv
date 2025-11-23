@@ -1,4 +1,0 @@
-"0","# orden ascendente"
-"0","df9 <- variantes %>% arrange(POS)"
-"0","# orden descentende"
-"0","df10 <- variantes %>% arrange(desc(POS))"

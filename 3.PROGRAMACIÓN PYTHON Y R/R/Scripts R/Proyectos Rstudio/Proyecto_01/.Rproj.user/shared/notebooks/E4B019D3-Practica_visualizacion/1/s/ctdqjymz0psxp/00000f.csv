@@ -1,7 +1,0 @@
-"0","data=readxl::read_xlsx("
-"0","  ""RNASeq_totalcounts_vs_totaltrans.xlsx"",sheet=1, .name_repair=""universal"")"
-"1","[1m[22mNew names:
-[36m•[39m `Sample Name` -> `Sample.Name`
-[36m•[39m `Number of Transcripts` -> `Number.of.Transcripts`
-[36m•[39m `Total Counts` -> `Total.Counts`
-"

@@ -1,5 +1,0 @@
-"0",""
-"0","#df5 <- variantes %>% filter(sample_id == ""SRR2584863"" | sample_id == ""SRR2584866"") %>% filter(POS >= 200000 & POS <= 300000)"
-"0","# También se puede hacer utilizando otra función que es between"
-"0"," "
-"0","df6 <- variantes %>% filter(sample_id %in% c(""SRR2584863"", ""SRR2584866"") & between(POS, 200000, 300000))"

@@ -1,4 +1,0 @@
-"0","data %>% "
-"0","  rename(gene = X) %>%"
-"0","  gather(key=""samples"", value=""FPKM"", -gene) %>%"
-"0","  head()"

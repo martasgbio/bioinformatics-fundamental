@@ -1,8 +1,0 @@
-"0","library(ggplot2)"
-"0","library(dplyr)"
-"0",""
-"0","# En estre caso he creado un nuevo data frame seleccionando solo los datos que corresponden al gen LEU4"
-"0","LEU4 = ArchivoR_long %>% filter(name == ""LEU4"")"
-"0",""
-"0","ggplot(data=LEU4, mapping= aes(x=Tasa_crecimiento, y = Expresión_genética, color=Nutriente)) +         "
-"0","  geom_line(size=1) + labs (x=""Tasa de crecimiento"", y=""Expresión del gen LEU4"")"

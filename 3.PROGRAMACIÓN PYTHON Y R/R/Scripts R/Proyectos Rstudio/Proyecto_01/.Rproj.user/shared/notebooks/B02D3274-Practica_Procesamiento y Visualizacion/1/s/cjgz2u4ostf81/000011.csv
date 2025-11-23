@@ -1,8 +1,0 @@
-"0","data.long %>%"
-"0","  filter(gene==""BRCA1"" | gene == ""BRCA2"") %>%"
-"0","  group_by(gene,tissue) %>%"
-"0","  summarize(mean_FPKM=mean(FPKM), median_FPKM = median(FPKM)) %>% "
-"0","  arrange(mean_FPKM) %>%"
-"0","  head()"
-"1","[1m[22m`summarise()` has grouped output by 'gene'. You can override using the `.groups` argument.
-"

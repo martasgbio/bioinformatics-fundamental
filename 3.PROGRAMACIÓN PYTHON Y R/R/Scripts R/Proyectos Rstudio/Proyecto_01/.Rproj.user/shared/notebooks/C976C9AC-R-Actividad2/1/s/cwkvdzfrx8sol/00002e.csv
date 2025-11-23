@@ -1,4 +1,0 @@
-"0","ArchivoR_long %>% filter(BP == ""leucine biosynthesis"") %>% ggplot(, mapping= aes(x=Tasa_crecimiento, y = Expresión_genética, color=Nutriente)) +         "
-"0","  geom_point(size=1) + labs (x=""Tasa de crecimiento"", y=""Expresión del gen"") + geom_smooth(method = ""lm"", se = FALSE, linetype = ""solid"", size= 1) + facet_wrap(~name)"
-"1","[1m[22m`geom_smooth()` using formula = 'y ~ x'
-"

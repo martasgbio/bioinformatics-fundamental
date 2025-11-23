@@ -1,4 +1,0 @@
-"0","# y calcular cuantas observaciones tengo por muestra"
-"0",""
-"0","# aqui la función nrow no sirve, si se quiere contabilizar hay que usar la función n"
-"0","variantes %>% group_by(sample_id) %>% summarise(row_num = n())"

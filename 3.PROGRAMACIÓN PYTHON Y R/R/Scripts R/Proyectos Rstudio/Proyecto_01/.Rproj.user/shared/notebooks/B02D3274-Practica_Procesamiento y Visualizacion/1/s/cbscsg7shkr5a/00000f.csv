@@ -1,4 +1,0 @@
-"0","data.long %>%"
-"0","  filter(gene==""BRCA1"") %>%"
-"0","  ggplot(., aes(x=samples, y=FPKM)) +"
-"0","  geom_col()"

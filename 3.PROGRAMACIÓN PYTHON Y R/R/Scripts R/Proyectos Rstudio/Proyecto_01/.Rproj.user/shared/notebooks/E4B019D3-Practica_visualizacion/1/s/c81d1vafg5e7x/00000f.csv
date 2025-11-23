@@ -1,4 +1,0 @@
-"0","ggplot(data=data) + "
-"0","  geom_point(aes(x=Number.of.Transcripts, y = Total.Counts,fill=Sample.Name),"
-"0","             shape=21,size=2) + "
-"0","    facet_wrap(~Treatment)"

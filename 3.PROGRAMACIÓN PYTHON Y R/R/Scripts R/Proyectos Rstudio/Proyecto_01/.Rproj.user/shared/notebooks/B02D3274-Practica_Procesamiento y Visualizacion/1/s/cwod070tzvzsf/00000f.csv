@@ -1,5 +1,0 @@
-"0","metadata %>%"
-"0","  select(c(1,10,11,17)) %>%"
-"0","  rename(tissue = characteristics_ch1) %>%"
-"0","  rename(metastasis = characteristics_ch1.1) %>%"
-"0","  head()"

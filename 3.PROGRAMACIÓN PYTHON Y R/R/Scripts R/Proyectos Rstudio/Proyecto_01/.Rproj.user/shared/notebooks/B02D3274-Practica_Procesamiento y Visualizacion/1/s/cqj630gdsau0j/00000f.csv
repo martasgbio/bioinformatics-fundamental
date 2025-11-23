@@ -1,8 +1,0 @@
-"0","# creamos un nuevo data frame modificado con lo anterior, no es que modifiquemos el metadata inicial"
-"0","metadata.modified = metadata %>%"
-"0","  select(c(1,10,11,17)) %>%"
-"0","  rename(tissue = characteristics_ch1) %>%"
-"0","  rename(metastasis = characteristics_ch1.1) %>%"
-"0","  mutate(tissue = gsub(""tissue: "","""",tissue)) %>%"
-"0","  mutate(metastasis = gsub(""metastasis: "","""",metastasis))"
-"0","  "

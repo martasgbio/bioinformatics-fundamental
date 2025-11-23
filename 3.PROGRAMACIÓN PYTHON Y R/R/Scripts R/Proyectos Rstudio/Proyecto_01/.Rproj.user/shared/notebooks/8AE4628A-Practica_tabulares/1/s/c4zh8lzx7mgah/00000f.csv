@@ -1,2 +1,0 @@
-"0","df7 <- df6 %>% select(c(""sample_id"", ""CHROM"", ""POS""))"
-"0","View(df7)"

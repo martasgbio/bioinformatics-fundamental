@@ -1,6 +1,0 @@
-"0","# Número de secuencias"
-"0","print(paste(""El número de secuencias es "", length(ecoli)))"
-"1","[1]"
-"1"," ""El número de secuencias es  4239"""
-"1","
-"

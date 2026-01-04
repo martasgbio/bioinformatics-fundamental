@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     stats = fasta_stats(fasta_file)
 
-    output_file = "fasta_statistics.txt"
+    output_file = os.path.join("..", "results", "fasta_statistics.txt")
     with open(output_file, "w") as out:
         out.write("FASTA statistics\n")
         out.write("----------------\n")

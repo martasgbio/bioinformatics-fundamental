@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 orf_records.append(orf_rec)
 
             # Guardar en archivo FASTA
-            output_file = f"{record.id}_orfs.fasta"
+            output_file = os.path.join("..", "results", f"{record.id}_orfs.fasta")
             SeqIO.write(orf_records, output_file, "fasta")
             print(f"ORFs saved to {output_file}")
 

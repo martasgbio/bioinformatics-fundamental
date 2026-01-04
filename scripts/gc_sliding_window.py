@@ -37,7 +37,7 @@ if __name__ == "__main__":
         plt.title(f"GC Sliding Window - {record.id}")
         plt.tight_layout()
 
-        output_file = f"{record.id}_gc_sliding_window.png"
+        output_file = os.path.join(script_dir, "../results", f"{record.id}_gc_sliding_window.png")
         plt.savefig(output_file)
         plt.close()
 

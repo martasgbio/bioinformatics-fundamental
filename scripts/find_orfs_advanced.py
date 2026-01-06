@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 import sys
+import os
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+results_dir = os.path.join(script_dir, "..", "results")
+os.makedirs(results_dir, exist_ok=True)
+
+
 
 START_CODON = "ATG"
 STOP_CODONS = ["TAA", "TAG", "TGA"]
@@ -55,7 +63,7 @@ if __name__ == "__main__":
                 orf_records.append(orf_rec)
 
             # Guardar en archivo FASTA
-            output_file = os.path.join("..", "results", f"{record.id}_orfs.fasta")
+            output_file = output_file = os.path.join(results_dir, f"{record.id}_orfs.fasta")
             SeqIO.write(orf_records, output_file, "fasta")
             print(f"ORFs saved to {output_file}")
 

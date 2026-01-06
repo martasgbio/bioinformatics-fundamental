@@ -3,6 +3,11 @@ import sys
 import os
 from Bio import SeqIO
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+results_dir = os.path.join(script_dir, "..", "results")
+os.makedirs(results_dir, exist_ok=True)
+
+
 def gc_content(seq):
     gc = seq.count("G") + seq.count("C")
     return (gc / len(seq)) * 100 if len(seq) > 0 else 0
@@ -52,7 +57,7 @@ if __name__ == "__main__":
 
     stats = fasta_stats(fasta_file)
 
-    output_file = os.path.join("..", "results", "fasta_statistics.txt")
+    output_file = os.path.join(results_dir, "fasta_statistics.txt")
     with open(output_file, "w") as out:
         out.write("FASTA statistics\n")
         out.write("----------------\n")

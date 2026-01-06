@@ -3,6 +3,11 @@ import os
 from Bio import SeqIO
 import matplotlib.pyplot as plt
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+results_dir = os.path.join(script_dir, "..", "results")
+os.makedirs(results_dir, exist_ok=True)
+
+
 def gc_content(seq):
     """Calculate GC percentage of a DNA sequence."""
     gc = seq.count("G") + seq.count("C")
@@ -37,7 +42,8 @@ if __name__ == "__main__":
         plt.title(f"GC Sliding Window - {record.id}")
         plt.tight_layout()
 
-        output_file = os.path.join(script_dir, "../results", f"{record.id}_gc_sliding_window.png")
+        output_file = output_file = os.path.join(results_dir, f"{record.id}_gc_sliding_window.png")
+
         plt.savefig(output_file)
         plt.close()
 

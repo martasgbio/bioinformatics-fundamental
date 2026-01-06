@@ -1,0 +1,9 @@
+##fileformat=VCFv4.2
+##source=toy_example
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO
+chr1    12345   .       A       G       .       PASS    .
+chr1    12350   .       C       T       .       PASS    .
+chr2    54321   .       G       A       .       PASS    .
+chr2    54330   .       T       C       .       PASS    .
+chr3    11111   .       A       T       .       PASS    .
+

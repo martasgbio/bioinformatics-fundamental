@@ -64,12 +64,15 @@ Outputs:
 ### 3. ORF Detection
 
 Script:
+
       scripts/find_orfs_advance.py
+
 
 
 Detects ORFs and reports the longest ORF per sequence.
 
 Outputs:
+
        results/seq1_orfs.fasta
        results/seq2_orfs.fasta
 
@@ -82,7 +85,6 @@ From the root of the repository:
 
 ```bash
 bash pipelines/basic_analysis/run_basic_analysis.sh
-
 
 
 ---
@@ -99,13 +101,13 @@ pip3 install -r requirements.txt
 
 
 Notes: 
-This pipeline is intended for educational and portfolio purposes.
-It is modular and can be extended to more advanced workflows such as 
-variant analysis, cancer genomics, and metagenomics.
+ This pipeline is intended for educational and portfolio purposes.
+ It is modular and can be extended to more advanced workflows such as 
+ variant analysis, cancer genomics, and metagenomics.
 
-Author:
+ Author:
 
-Marta Sevillano 
-Bioinformatics MSc Student
+  Marta Sevillano 
+  Bioinformatics MSc Student
 
  

@@ -1,8 +1,8 @@
 # Variant Analysis Pipeline
 
 This pipeline performs a basic analysis of genetic variants from a VCF file.
-It is designed as an introductory workflow for variant processing and as a
-foundation for more advanced analyses such as cancer genomics.
+It is designed as an introductory workflow and as part of a professional
+bioinformatics portfolio.
 
 ---
 
@@ -11,8 +11,7 @@ foundation for more advanced analyses such as cancer genomics.
 The pipeline includes the following steps:
 
 1. Parsing a VCF file
-2. Basic variant statistics
-3. Summary of variant types
+2. Computing basic variant statistics
 
 All outputs are saved in the `results/` directory.
 
@@ -20,34 +19,32 @@ All outputs are saved in the `results/` directory.
 
 ## Input Data
 
-- Variant Call Format (VCF) file
-- Example input file:
+- VCF file containing genetic variants
 
-      data/exmple.vcf
+Example input:
+
+data/example_variants.vcf
 
 ---
 
 ## Analysis Steps
 
-### 1. Variant Parsing and Statistics
+### 1. Variant Statistics
 
 Script:
-        scripts/variant_stats.py
 
+scripts/variant_stats.py
 
-For each variant, the script extracts:
-- Chromosome
-- Position
-- Reference allele
-- Alternate allele
+Calculates:
 
-It computes:
 - Total number of variants
-- Number of SNPs and indels
+- Number of SNPs
+- Number of insertions
+- Number of deletions
 
 Output:
-       results/variant_statistics.txt
 
+results/variant_statistics.txt
 
 ---
 
@@ -55,26 +52,30 @@ Output:
 
 From the root of the repository:
 
-```bash
 bash pipelines/variant_analysis/run_variant_analysis.sh
 
+---
 
-Requeriments: 
+## Requirements
+
 - Python >= 3.8
 
-No external libraries are required for this pipeline. 
+Install dependencies with:
 
-Notes: 
+pip3 install -r requirements.txt
 
-This pipeline is intentionally simple and educational. 
-It can be extended to include: 
-- Variant filtering
-- Functional annotation
-- Cancer-related mutation analysis 
+---
 
-Author: 
+## Notes
+
+This pipeline is intended for educational and portfolio purposes.
+It provides a foundation for more advanced analyses such as
+cancer genomics and variant annotation.
+
+---
+
+## Author
+
 Marta Sevillano
-
-Bioinformatics MSc Student 
-
+Bioinformatics MSc Student
 

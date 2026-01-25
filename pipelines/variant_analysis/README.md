@@ -1,8 +1,8 @@
 # Variant Analysis Pipeline
 
-This pipeline performs a basic analysis of genetic variants from a VCF file.
-It is designed as an introductory workflow and as part of a professional
-bioinformatics portfolio.
+This pipeline performs a basic somatic variants analysis using VCF files.
+It is designed as an educational but realistic example of a cancer genomics
+workflow and as part of a profesional bioinformatics portfolio.
 
 ---
 
@@ -10,8 +10,9 @@ bioinformatics portfolio.
 
 The pipeline includes the following steps:
 
-1. Parsing a VCF file
-2. Computing basic variant statistics
+1. Filtering of somatic variants from a VCF file
+2. Quality and depth-based variant selection
+3. Generation of a variant summary report
 
 All outputs are saved in the `results/` directory.
 
@@ -19,32 +20,49 @@ All outputs are saved in the `results/` directory.
 
 ## Input Data
 
-- VCF file containing genetic variants
+- VCF file containing variants calls
 
 Example input:
 
-data/example_variants.vcf
+data/cancer_variants/somatic_example.vcf
 
 ---
 
 ## Analysis Steps
 
-### 1. Variant Statistics
+### 1. Somatic Variant Filtering
 
 Script:
 
-scripts/variant_stats.py
+scripts/somatic_filter.py
 
-Calculates:
+Filters variants based on:
 
-- Total number of variants
-- Number of SNPs
-- Number of insertions
-- Number of deletions
+- FILTER = PASS
+- DP ≥ 30
 
 Output:
 
-results/variant_statistics.txt
+results/somatic_variants.vcf
+
+---
+
+### 2. Variant Summary Report
+
+Script:
+
+scripts/variant_report.py
+
+Generates a summary including:
+
+- Total number of variants
+- Number of somatic variants
+- SNP vs INDEL counts
+- Gene-level variant counts
+
+Output:
+
+results/variant_report.txt
 
 ---
 
@@ -69,13 +87,12 @@ pip3 install -r requirements.txt
 ## Notes
 
 This pipeline is intended for educational and portfolio purposes.
-It provides a foundation for more advanced analyses such as
-cancer genomics and variant annotation.
+It reflects simplified but realistic practices used in cancer genomics
+and clinical variant analysis.
 
 ---
 
 ## Author
 
 Marta Sevillano
-Bioinformatics MSc Student
-
+Bioinformatics MSc Graduate

@@ -1,0 +1,27 @@
+# =========================
+# RAW DATA (no subir)
+# =========================
+data/raw/*.fastq
+results/metagenomics_analysis/trimmed/*.fastq
+
+# =========================
+# QC compressed outputs
+# =========================
+results/metagenomics_analysis/qc/fastqc/*.zip
+
+# =========================
+# MultiQC internal data
+# =========================
+results/metagenomics_analysis/qc/multiqc_data/
+
+# =========================
+# Python cache
+# =========================
+__pycache__/
+*.pyc
+
+# =========================
+# System files
+# =========================
+.DS_Store
+

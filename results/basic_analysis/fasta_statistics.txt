@@ -1,8 +1,0 @@
-FASTA statistics
-----------------
-Number of sequences: 2
-Min length: 18
-Max length: 19
-Mean length: 18.50
-N50: 19
-Global GC content (%): 51.35

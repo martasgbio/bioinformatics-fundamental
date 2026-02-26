@@ -1,3 +1,0 @@
-Total SNVs: 5
-Transitions: 4
-Transversions: 1

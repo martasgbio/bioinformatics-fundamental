@@ -1,18 +1,18 @@
 # =========================
-# RAW DATA (no subir)
+# Generated data & outputs
 # =========================
-data/raw/*.fastq
-results/metagenomics_analysis/trimmed/*.fastq
+results/
+*.html
+*.zip
 
 # =========================
-# QC compressed outputs
+# Raw sequencing data
 # =========================
-results/metagenomics_analysis/qc/fastqc/*.zip
-
-# =========================
-# MultiQC internal data
-# =========================
-results/metagenomics_analysis/qc/multiqc_data/
+*.fastq
+*.fq
+*.bam
+*.sam
+*.vcf
 
 # =========================
 # Python cache

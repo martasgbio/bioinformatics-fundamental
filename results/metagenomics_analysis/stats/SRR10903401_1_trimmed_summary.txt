@@ -1,3 +1,0 @@
-Reads: 399958
-Average read length: 139.69
-GC content (%): 43.78
